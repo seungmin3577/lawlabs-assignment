@@ -2,10 +2,12 @@ import { registerAs } from '@nestjs/config';
 import { ConnectionOptions } from 'typeorm';
 import * as path from 'path';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { config } from 'dotenv';
+
+config();
 
 interface TypeOrmConfigurations {
-  connectionDev: ConnectionOptions;
-  connectionProd: ConnectionOptions;
+  connection: ConnectionOptions;
 }
 
 const {
@@ -21,7 +23,7 @@ export const databaseConfig = registerAs(
   'database',
   () =>
     ({
-      connectionDev: {
+      connection: {
         name: 'connection',
         type: 'mysql',
         host: DATABASE_HOST ?? '127.0.0.1',
@@ -30,32 +32,11 @@ export const databaseConfig = registerAs(
         password: DATABASE_PASSWORD,
         database: DATABASE_NAME,
         entities: [path.join(__dirname, '../**/*.entity{.ts,.js}')],
-        migrations: [
-          path.join(__dirname, '../databases/migrations/*{.ts,.js}'),
-        ],
+        migrations: [path.join(__dirname, '../**/*.migration.{.ts,.js}')],
         cli: {
           migrationsDir: path.join(__dirname, '../databases/migrations'),
         },
-        synchronize: true,
-        logging: true,
-        namingStrategy: new SnakeNamingStrategy(),
-      },
-      connectionProd: {
-        name: 'connection',
-        type: 'mysql',
-        host: DATABASE_HOST ?? '127.0.0.1',
-        port: DATABASE_PORT ?? 3306,
-        username: DATABASE_USER,
-        password: DATABASE_PASSWORD,
-        database: DATABASE_NAME,
-        entities: [path.join(__dirname, '../**/*.entity{.ts,.js}')],
-        synchronize: false,
-        migrations: [
-          path.join(__dirname, '../databases/migrations/*{.ts,.js}'),
-        ],
-        cli: {
-          migrationsDir: path.join(__dirname, '../databases/migrations'),
-        },
+        // synchronize: NODE_ENV === 'prod' ? false : true,
         logging: true,
         namingStrategy: new SnakeNamingStrategy(),
       },

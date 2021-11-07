@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   type: 'mysql',
   host: process.env.DATABASE_HOST ?? '127.0.0.1',
@@ -7,11 +5,11 @@ module.exports = {
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  entities: [path.join(__dirname, 'src/**/*.entity{.ts,.js}')],
-  migrations: [path.join(__dirname, 'src/databases/migrations/*{.ts,.js}')],
+  entities: ['dist/**/*.entity{.ts,.js}'],
+  migrations: ['dist/databases/migrations/*.{.ts,.js}'],
   migrationsRun: true,
   cli: {
-    migrationsDir: path.join(__dirname, 'src/databases/migrations'),
+    migrationsDir: 'src/databases/migrations',
   },
   synchronize: false,
   logging: true,

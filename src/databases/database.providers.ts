@@ -1,20 +1,15 @@
 import { createConnection, ConnectionOptions } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 
-const { NODE_ENV } = process.env;
-
 export const databaseProviders = [
   {
     inject: [ConfigService],
-    provide: 'databaseConnection',
+    provide: 'DatabaseConnection',
     useFactory: async (configService: ConfigService) => {
-      const env =
-        NODE_ENV === 'prod'
-          ? 'database.connectionsProd'
-          : 'database.connectionsDev';
-      return await createConnection(
-        configService.get(env) as ConnectionOptions,
+      const connectionOptions: ConnectionOptions = configService.get(
+        'database.connection',
       );
+      return await createConnection(connectionOptions);
     },
   },
 ];
