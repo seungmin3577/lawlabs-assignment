@@ -34,12 +34,11 @@
 
 # Requirements
 
-- NodeJS
-- Docker
-- Yarn
-- PM2
+- [NodeJS](https://nodejs.org/ko/download/)
+- [Docker](https://www.docker.com/get-started)
+- [Yarn](https://yarnpkg.com/getting-started)
+- [PM2](https://pm2.keymetrics.io/)
 
--[Docker](https://www.docker.com/get-started) -[NodeJS](https://nodejs.org/ko/download/) -[Yarn](https://yarnpkg.com/getting-started) -[PM2](https://pm2.keymetrics.io/)
 
 # Settings
 
