@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
+import { UserGrade } from 'src/modules/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,6 +9,15 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+/**
+ * 요구 사항
+ *
+ * 회원의 등급 별로 다른 상품이 보여져야 함.
+ * @등급표
+ * 1. 중요회원
+ * 2. 일반회원
+ */
 
 @Entity('products')
 export class Product {
@@ -37,6 +47,13 @@ export class Product {
     type: 'int',
   })
   public productStock: number;
+
+  @IsEnum(UserGrade)
+  @Column({
+    type: 'enum',
+    enum: UserGrade,
+  })
+  public allowGrade: UserGrade;
 
   @CreateDateColumn()
   readonly createdAt: Date;

@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsString, IsEmail } from 'class-validator';
+import {
+  IsNumber,
+  IsString,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+} from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -9,6 +15,15 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum UserRole {
+  관리자 = 'ADMIN',
+  회원 = 'MEMBER',
+}
+
+export enum UserGrade {
+  일반회원 = 'GENERAL',
+  중요회원 = 'IMPORTANT',
+}
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
@@ -29,6 +44,32 @@ export class User {
     length: '767',
   })
   public password: string;
+
+  @IsEnum(UserRole)
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+  })
+  public role: UserRole;
+
+  @IsEnum(UserGrade)
+  @IsOptional()
+  @Column({
+    type: 'enum',
+    enum: UserGrade,
+    nullable: true,
+  })
+  public grade?: UserGrade;
+
+  @IsString()
+  @IsOptional()
+  @Column({
+    type: 'varchar',
+    length: '767',
+    nullable: true,
+    default: null,
+  })
+  public refreshToken?: string;
 
   @CreateDateColumn()
   readonly createdAt: Date;

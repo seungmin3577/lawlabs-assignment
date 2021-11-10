@@ -16,7 +16,10 @@ class EnvironmentVariables {
   readonly PORT: number;
 
   @IsString()
-  readonly JWT_SECRET: string;
+  readonly JWT_ACCESS_SECRET: string;
+
+  @IsString()
+  readonly JWT_REFRESH_SECRET: string;
 
   @IsString()
   readonly DATABASE_HOST: string;
