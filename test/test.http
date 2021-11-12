@@ -1,4 +1,6 @@
 @URL = http://localhost:8802
+
+# SignIn을 통해 나온 AccessToken을 아래에 적어 주세요.
 @ACCESS_TOKEN = 
 
 ###
@@ -15,29 +17,60 @@ Content-Type: application/json
 
 {
     "email": "user@user.com",
-    "password": "123123"
+    "password": "user"
 }
 
 ###
+#해당 API 실행 후 나오는 access token을 위변수에 넣어 주세요 (유저 access token)
 POST {{URL}}/auth/sign-in
 Content-Type:  application/json
 
 {
     "email": "user@user.com",
-    "password": "123123"
+    "password": "user"
 }
 
 
 ###
+#해당 API 실행 후 나오는 access token을 위변수에 넣어 주세요 (관리자 access token)
 POST {{URL}}/auth/sign-in
 Content-Type: application/json
+
+{
+    "email": "admin@admin.com",
+    "password": "admin"
+}
+
+###
+#user관련 API는 관리자만 접근 가능합니다.
+GET {{URL}}/users
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
 
 {
 
 }
 
 ###
-GET {{URL}}/users
+GET {{URL}}/users/2
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+
+}
+
+###
+PATCH  {{URL}}/users/2
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+    "grade": "IMPORTANT"
+}
+
+###
+DELETE {{URL}}/users/2
 Content-Type: application/json
 Authorization: bearer {{ACCESS_TOKEN}}
 
@@ -53,3 +86,34 @@ Authorization: bearer {{ACCESS_TOKEN}}
 {
 
 }
+
+###
+GET {{URL}}/products/1
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+
+}
+
+
+###
+PATCH  {{URL}}/products/1
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+    "productName": "품상 1"
+}
+
+###
+DELETE  {{URL}}/products/1
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+
+}
+
+
+
