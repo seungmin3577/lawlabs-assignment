@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { UserGrade, UserRole } from './modules/users/entities/user.entity';
-import { HttpExceptionFilter } from './filters/HttpExceptionFilter';
+import { HttpExceptionFilter } from './common/http-exception-filter';
 import { ValidationPipe } from '@nestjs/common';
 import { json } from 'express';
 import * as helmet from 'helmet';
@@ -9,7 +9,7 @@ import * as helmet from 'helmet';
 declare global {
   namespace Express {
     interface Request {
-      account: {
+      user: {
         id: number;
         role: UserRole;
         grade?: UserGrade;
@@ -33,6 +33,6 @@ async function bootstrap() {
   );
   app.enableCors();
 
-  await app.listen(3000);
+  await app.listen(8802);
 }
 bootstrap();

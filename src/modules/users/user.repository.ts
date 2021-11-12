@@ -10,7 +10,7 @@ export const UserRepositoryProviders = [
   {
     providers: [UserRepository],
     inject: ['DatabaseConnection'],
-    provide: 'userRepository',
+    provide: 'UserRepository',
     useFactory: async (connection: Connection) => {
       return connection.getCustomRepository(UserRepository);
     },

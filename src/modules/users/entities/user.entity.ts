@@ -1,3 +1,4 @@
+import { PickType } from '@nestjs/mapped-types';
 import { Type } from 'class-transformer';
 import {
   IsNumber,
@@ -41,7 +42,7 @@ export class User {
   @IsString()
   @Column({
     type: 'varchar',
-    length: '767',
+    length: 1000,
   })
   public password: string;
 
@@ -80,3 +81,5 @@ export class User {
   @DeleteDateColumn()
   readonly deletedAt: Date;
 }
+
+export class UserId extends PickType(User, ['userId'] as const) {}

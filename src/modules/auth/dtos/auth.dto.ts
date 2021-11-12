@@ -7,11 +7,6 @@ export class SignUpUserReqDto extends PickType(User, [
   'password',
 ] as const) {}
 
-export class SignUpAdminReqDto extends IntersectionType(
-  PickType(User, ['email', 'password'] as const),
-  PartialType(PickType(User, ['role'] as const)),
-) {}
-
 export class SignUpResDto extends PickType(User, ['userId'] as const) {}
 
 export class SignInReqDto extends PickType(User, [

@@ -6,11 +6,18 @@ import {
   HttpCode,
   Param,
   Patch,
+  Post,
+  UseGuards,
 } from '@nestjs/common';
-import { UpdateUserDto, UserId } from './dtos/update-user.dto';
-import { User } from './entities/user.entity';
+import { RolesGuard } from 'src/common/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { User, UserId, UserRole } from './entities/user.entity';
 import { UsersService } from './users.service';
 
+@UseGuards(RolesGuard)
+@Roles(UserRole.관리자)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -25,6 +32,12 @@ export class UsersController {
   @HttpCode(200)
   findUserById(@Param() userId: UserId): Promise<User> {
     return this.usersService.findUserById({ ...userId });
+  }
+
+  @Post()
+  @HttpCode(201)
+  createUser(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createUser(createUserDto);
   }
 
   @Patch(':userId')

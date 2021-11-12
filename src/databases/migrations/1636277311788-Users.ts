@@ -1,8 +1,20 @@
-import { User } from 'src/modules/users/entities/user.entity';
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { User, UserRole } from 'src/modules/users/entities/user.entity';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  Repository,
+  getRepository,
+} from 'typeorm';
 
 export class Users1636277311788 implements MigrationInterface {
+  public getRepository(): Repository<User> {
+    return getRepository<User>(User, 'connection');
+  }
+
   public async up(queryRunner: QueryRunner): Promise<void> {
+    const repository = await this.getRepository();
+
     console.log('=====Run User Migration=====');
     await queryRunner.createTable(
       new Table({
@@ -26,6 +38,24 @@ export class Users1636277311788 implements MigrationInterface {
             length: '767',
           },
           {
+            name: 'user_role',
+            type: 'enum',
+            enum: ['ADMIN', 'USER'],
+          },
+          {
+            name: 'user_grade',
+            type: 'enum',
+            enum: ['GENERAL', 'IMPORTANT'],
+            isNullable: true,
+          },
+          {
+            name: 'refresh_token',
+            type: 'varchar',
+            length: '767',
+            isNullable: true,
+            default: null,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
@@ -43,6 +73,14 @@ export class Users1636277311788 implements MigrationInterface {
         ],
       }),
     );
+
+    const superUser = await repository.create({
+      email: 'admin@admin.co.kr',
+      password: 'admin',
+      role: UserRole.관리자,
+    });
+
+    await repository.save(superUser);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

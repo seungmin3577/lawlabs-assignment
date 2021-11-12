@@ -5,4 +5,6 @@ export class CreateProductDto extends PickType(Product, [
   'productName',
   'productPrice',
   'productStock',
+  'allowGrade',
+  'discountRate',
 ] as const) {}

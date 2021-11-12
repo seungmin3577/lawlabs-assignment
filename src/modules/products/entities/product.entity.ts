@@ -1,3 +1,4 @@
+import { PickType } from '@nestjs/mapped-types';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsString } from 'class-validator';
 import { UserGrade } from 'src/modules/users/entities/user.entity';
@@ -52,8 +53,16 @@ export class Product {
   @Column({
     type: 'enum',
     enum: UserGrade,
+    nullable: true,
   })
-  public allowGrade: UserGrade;
+  public allowGrade?: UserGrade;
+
+  @IsNumber()
+  @Column({
+    type: 'float',
+    default: 0,
+  })
+  public discountRate: number;
 
   @CreateDateColumn()
   readonly createdAt: Date;
@@ -64,3 +73,5 @@ export class Product {
   @DeleteDateColumn()
   readonly deletedAt: Date;
 }
+
+export class ProductId extends PickType(Product, ['productId'] as const) {}

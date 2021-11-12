@@ -1,29 +1,29 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { NOT_EXIST_USER_ERROR_MESSAGE } from 'src/constants/exception-messages';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto, UserId } from './dtos/update-user.dto';
-import { User } from './entities/user.entity';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { User, UserId } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('userRepository') private userRepository: UserRepository,
+    @Inject('UserRepository') private userRepository: UserRepository,
   ) {}
 
   createUser(createUserDto: CreateUserDto): Promise<User> {
     return this.userRepository.save(createUserDto);
   }
 
-  findUserByEmail({ email }: { email: string }): Promise<User> {
+  findUserByEmail({ email }: { email: string }): Promise<User | undefined> {
     return this.userRepository.findOne({ email });
   }
 
-  findUsers(): Promise<Array<User>> {
+  findUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findUserById({ userId }: UserId): Promise<User> {
+  findUserById({ userId }: UserId): Promise<User | undefined> {
     return this.userRepository.findOne(userId);
   }
 

@@ -34,8 +34,8 @@ export const databaseConfig = registerAs('database', () => {
       cli: {
         migrationsDir: path.join(__dirname, '../databases/migrations'),
       },
-      // synchronize: NODE_ENV === 'prod' ? false : true,
-      logging: true,
+      synchronize: true,
+      logging: false,
       namingStrategy: new SnakeNamingStrategy(),
     },
   } as TypeOrmConfigurations;

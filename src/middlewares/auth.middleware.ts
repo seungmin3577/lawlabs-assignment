@@ -45,7 +45,7 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     /** inject account information in request */
-    request.account = {
+    request.user = {
       id: verifiedToken.id,
       role: verifiedToken.role,
       grade: verifiedToken.grade,

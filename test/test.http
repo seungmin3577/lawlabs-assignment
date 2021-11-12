@@ -1,0 +1,55 @@
+@URL = http://localhost:8802
+@ACCESS_TOKEN = 
+
+###
+GET {{URL}}
+Content-Type: application/json
+
+{
+    
+}
+
+###
+POST {{URL}}/auth/sign-up
+Content-Type: application/json
+
+{
+    "email": "user@user.com",
+    "password": "123123"
+}
+
+###
+POST {{URL}}/auth/sign-in
+Content-Type:  application/json
+
+{
+    "email": "user@user.com",
+    "password": "123123"
+}
+
+
+###
+POST {{URL}}/auth/sign-in
+Content-Type: application/json
+
+{
+
+}
+
+###
+GET {{URL}}/users
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+
+}
+
+###
+GET {{URL}}/products
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+
+}

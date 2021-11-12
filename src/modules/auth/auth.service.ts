@@ -1,19 +1,14 @@
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { User, UserGrade, UserRole } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import {
-  SignUpAdminReqDto,
   SignUpUserReqDto,
   SignUpResDto,
   SignInResDto,
   SignInReqDto,
 } from './dtos/auth.dto';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { INVALID_USER_ERROR_MESSAGE } from 'src/constants/exception-messages';
 import {
@@ -30,19 +25,12 @@ export class AuthService {
     private readonly userService: UsersService,
     private readonly configService: ConfigService,
   ) {
-    this.accessSecretKey = this.configService.get('auth.jwtAccessSecret');
-    this.refreshSecretKey = this.configService.get('auth.jwtRefreshSecret');
-  }
-
-  async signUpForAdmin(signUpDto: SignUpAdminReqDto): Promise<SignUpResDto> {
-    const { email, password, role } = signUpDto;
-    const user = await this.userService.createUser({
-      email,
-      password: this.hashingPassword(password),
-      role,
-    });
-
-    return { userId: user.userId };
+    this.accessSecretKey = this.configService.get<string>(
+      'auth.jwtAccessSecret',
+    );
+    this.refreshSecretKey = this.configService.get<string>(
+      'auth.jwtRefreshSecret',
+    );
   }
 
   async signUp(signUpDto: SignUpUserReqDto): Promise<SignUpResDto> {
@@ -57,14 +45,11 @@ export class AuthService {
     return { userId: user.userId };
   }
 
-  async signIn(signInDto: SignInReqDto): Promise<SignInResDto> {
-    const { email, password } = signInDto;
-
+  async signIn({ email, password }: SignInReqDto): Promise<SignInResDto> {
     const user = await this.userService.findUserByEmail({ email });
 
     if (!user) throw new UnauthorizedException(INVALID_USER_ERROR_MESSAGE);
-
-    const isValid = await bcrypt.compare(user.password, password);
+    const isValid = await bcrypt.compare(password, user.password);
 
     if (isValid) {
       const { accessToken, refreshToken } = await this.createTokens(user);
