@@ -32,16 +32,15 @@
 예) 상품이 VIP회원에만 가격이 다른게 설정
 ```
 
-# Requirements
+# 세팅전 설치사항
 
-- NodeJS
-- Docker
-- Yarn
-- PM2
+- [NodeJS](https://nodejs.org/ko/download/)
+- [Docker](https://www.docker.com/get-started)
+- [Yarn](https://yarnpkg.com/getting-started)
+- [PM2](https://pm2.keymetrics.io/)
 
--[Docker](https://www.docker.com/get-started) -[NodeJS](https://nodejs.org/ko/download/) -[Yarn](https://yarnpkg.com/getting-started) -[PM2](https://pm2.keymetrics.io/)
 
-# Settings
+# 프로젝트 세팅 및 실행
 
 ## database settings
 
