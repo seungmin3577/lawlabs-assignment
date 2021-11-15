@@ -14,26 +14,26 @@ interface ProductListFindOptions {
 export class ProductRepository extends Repository<Product> {
   async findAll({ productName, userGrade, userRole }: ProductListFindOptions) {
     const query = await this.createQueryBuilder('product').select([
-      'product.productId',
-      'product.productName',
-      'product.productPrice',
-      'product.productStock',
-      'product.createdAt',
-      'product.updatedAt',
+      'product_id as productId',
+      'product_name as productName',
+      'product_price as productPrice',
+      'product_stock as productStock',
+      'created_at as createdAt',
+      'updated_at as updatedAt',
     ]);
 
     if (userRole === UserRole.회원) {
       if (userGrade === UserGrade.중요회원) {
         query
-          .addSelect('product.discountRate')
-          .where(`product.allowGrade = :${userGrade}`)
-          .orWhere(`product.allowGrade = :${userGrade}`);
+          .addSelect('discount_rate as discountRate')
+          .where(`product.allow_grade = :userGrade`, { userGrade })
+          .orWhere(`product.allow_grade = :userGrade`, { userGrade });
       } else {
-        query.where(`product.allowGrade = :${userGrade}`);
+        query.where(`product.allow_grade = :userGrade`, { userGrade });
       }
 
       if (productName) {
-        query.andWhere(`product.productName = :${productName}`);
+        query.andWhere(`product.product_name = :productName`, { productName });
       }
 
       return await query.getMany();

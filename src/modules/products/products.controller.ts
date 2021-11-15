@@ -67,7 +67,7 @@ export class ProductsController {
   }
 
   @Roles(UserRole.관리자)
-  @Patch('productId')
+  @Patch(':productId')
   async updateProduct(
     @Param() productId: ProductId,
     @Body() updateProductDto: UpdateProductDto,

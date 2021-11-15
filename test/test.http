@@ -1,7 +1,7 @@
 @URL = http://localhost:8802
 
 # SignIn을 통해 나온 AccessToken을 아래에 적어 주세요.
-@ACCESS_TOKEN = 
+@ACCESS_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6Ik1FTUJFUiIsImdyYWRlIjoiR0VORVJBTCIsImlhdCI6MTYzNjkzNDc1MCwiZXhwIjoxNjM2OTM4MzUwfQ.GnvrTDxChNDmye89MYDOF720751WnmjtTNrpF3MSRH4
 
 ###
 GET {{URL}}
@@ -95,6 +95,20 @@ Authorization: bearer {{ACCESS_TOKEN}}
 {
 
 }
+
+###
+POST  {{URL}}/products
+Content-Type: application/json
+Authorization: bearer {{ACCESS_TOKEN}}
+
+{
+    "productName":  "상품 5",
+    "productPrice": "250000",
+    "productStock": 5,
+    "allowGrade" : "IMPORTANT",
+    "discountRate": 3.2
+}
+
 
 
 ###
