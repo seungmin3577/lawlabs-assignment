@@ -37,7 +37,6 @@
 - [NodeJS](https://nodejs.org/ko/download/)
 - [Docker](https://www.docker.com/get-started)
 - [Yarn](https://yarnpkg.com/getting-started)
-- [PM2](https://pm2.keymetrics.io/)
 
 
 # 프로젝트 세팅 및 실행
@@ -64,12 +63,6 @@ $ yarn
 
 ```bash
 $ yarn start:dev
-```
-
-## deploy
-
-```bash
-$ yarn deploy
 ```
 
 # 구현 설명
