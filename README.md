@@ -82,6 +82,6 @@ $ yarn deploy
 로그인의 경우 JWT토큰 기반 로그인을 구현하였으며 AccessToken 갱신 로직은 넣지 않았습니다.
 ```
 
-#테스트 방법
+# 테스트 방법
 VSCode Extention에 RestClient를 설치 해 주세요.
 test.http 파일을 열어 테스트를 해 주세요.
